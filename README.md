@@ -8,4 +8,4 @@ Simple Budget Tracker
 ### Mac users
 ```brew install poppler```
 
--![alt text](http://i.imgur.com/WWLYo.gif "Frustrated cat can't believe this is the 12th time he's clicked on an auto-linked README.md URL")
+-![alt text](https://media.giphy.com/media/X8omQqfFyeq1a/giphy.gif "Frustrated cat can't believe this is the 12th time he's clicked on an auto-linked README.md URL")
