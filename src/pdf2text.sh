@@ -34,76 +34,80 @@ function convertToText {
 	fi
 }
 
-function parsePurchase {
-	local STRING=$1
-	local PROCESSDATE=$1[0]
-	local TYPE=$STRING[1]
-	local USAGEDATE=$STRING[2]
-	local SOURCE=$STRING[3]
-	local AMOUNT=$STRING[4]
-	local BALANCE=$STRING[5]
-	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
-	echo $RETURN_STRING
+function logToFile() {
+	echo $1 >> "../text/budget.csv"
 }
 
-function parseTransfer {
-	local STRING=$1
-	local PROCESSDATE=$STRING[0]
+function parsePurchase() {
+	local STRING=("$@")
+	local PROCESSDATE="${STRING[1]}"
+	local TYPE="${STRING[2]}"
+	local USAGEDATE="${STRING[3]}"
+	local SOURCE="${STRING[4]}"
+	local AMOUNT="${STRING[5]}"
+	local BALANCE="${STRING[6]}"
+	local RETURN_STRING="$PROCESSDATE,$TYPE,$USAGEDATE,$SOURCE,$AMOUNT,$BALANCE"
+	logToFile "${RETURN_STRING}"
+}
+
+function parseTransfer() {
+local STRING=("$@")
+	local PROCESSDATE="${STRING[1]}"
 	local TYPE="Transfer"
 	local USAGEDATE=$PROCESSDATE
-	local SOURCE=$STRING[1]
-	local AMOUNT=$STRING[2]
-	local BALANCE=$STRING[3]
+	local SOURCE="${STRING[2]}"
+	local AMOUNT="${STRING[3]}"
+	local BALANCE="${STRING[4]}"
 	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
-	echo $RETURN_STRING
+	logToFile "${RETURN_STRING}"
 }
 
 function parseRecurring {
-	local STRING=$1
-	local PROCESSDATE=$STRING[0]
-	local TYPE=$STRING[1]
-	local USAGEDATE=$STRING[2]
-	local SOURCE=$STRING[3]
-	local AMOUNT=$STRING[4]
-	local BALANCE=$STRING[5]
+	local STRING=("$@")
+	local PROCESSDATE="${STRING[1]}"
+	local TYPE="${STRING[2]}"
+	local USAGEDATE="${STRING[3]}"
+	local SOURCE="${STRING[4]}"
+	local AMOUNT="${STRING[5]}"
+	local BALANCE="${STRING[6]}"
 	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
-	echo $RETURN_STRING
+	logToFile "${RETURN_STRING}"
 }
 
 function parseReturn {
-	local STRING=$1
-	local PROCESSDATE=$STRING[0]
-	local TYPE=$STRING[1]
-	local USAGEDATE=$STRING[2]
-	local SOURCE=$STRING[3]
-	local AMOUNT=$STRING[4]
-	local BALANCE=$STRING[5]
+	local STRING=("$@")
+	local PROCESSDATE="${STRING[1]}"
+	local TYPE="${STRING[2]}"
+	local USAGEDATE="${STRING[3]}"
+	local SOURCE="${STRING[4]}"
+	local AMOUNT="${STRING[5]}"
+	local BALANCE="${STRING[6]}"
 	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
-	echo $RETURN_STRING
+	logToFile "${RETURN_STRING}"
 }
 
 function parseATMWith {
-	local STRING=$1
-	local PROCESSDATE=$STRING[0]
-	local TYPE=$STRING[1]
-	local USAGEDATE=$STRING[2]
-	local SOURCE=$STRING[3]
-	local AMOUNT=$STRING[4]
-	local BALANCE=$STRING[5]
+	local STRING=("$@")
+	local PROCESSDATE="${STRING[1]}"
+	local TYPE="${STRING[2]}"
+	local USAGEDATE="${STRING[3]}"
+	local SOURCE="${STRING[4]}"
+	local AMOUNT="${STRING[5]}"
+	local BALANCE="${STRING[6]}"
 	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
-	echo $RETURN_STRING
+	logToFile "${RETURN_STRING}"
 }
 
 function parseATMFee {
-	local STRING=$1
-	local PROCESSDATE=$STRING[0]
-	local TYPE=$STRING[1]
+	local STRING=("$@")
+	local PROCESSDATE="${STRING[1]}"
+	local TYPE="${STRING[2]}"
 	local USAGEDATE=$PROCESSDATE
 	local SOURCE="ATM Fee"
-	local AMOUNT=$STRING[2]
+	local AMOUNT="${STRING[3]}"
 	local BALANCE=""
 	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
-	echo $RETURN_STRING
+	logToFile "${RETURN_STRING}"
 }
 
 function parseText {
@@ -122,10 +126,8 @@ function parseText {
 			while IFS='' read -r line || [[ -n "$line" ]]; do
 				if [[ $line =~ $REX_PUR ]]; then
 				    COUNT=$((COUNT+1))
-				    RETURN_STRING=$(parsePurchase $BASH_REMATCH)
 				elif [[ $line =~ $REX_TRANSFER ]]; then
 				    COUNT=$((COUNT+1))
-					parseTransfer $BASH_REMATCH
 				elif [[ $line =~ $REX_PUR_RECUR ]]; then
 				    COUNT=$((COUNT+1))
 				elif [[ $line =~ $REX_PUR_RETURN ]]; then
@@ -149,25 +151,23 @@ function parseText {
 			RETURN_STRING=""
 			if [[ $line =~ $REX_PUR ]]; then
 			    COUNT=$((COUNT+1))
-				parsePurchase ${BASH_REMATCH[@]}
+			 	parsePurchase "${BASH_REMATCH[@]}"
 			elif [[ $line =~ $REX_TRANSFER ]]; then
 			    COUNT=$((COUNT+1))
-				RETURN_STRING=$(parseTransfer ${BASH_REMATCH[@]})
+			    parseTransfer "${BASH_REMATCH[@]}"
 			elif [[ $line =~ $REX_PUR_RECUR ]]; then
 			    COUNT=$((COUNT+1))
-			    RETURN_STRING=$(parseRecurring $BASH_REMATCH[@])
+			    parseRecurring "${BASH_REMATCH[@]}"
 			elif [[ $line =~ $REX_PUR_RETURN ]]; then
 			    COUNT=$((COUNT+1))
-			    RETURN_STRING=$(parseReturn $BASH_REMATCH[@])
+				parseReturn "${BASH_REMATCH[@]}"
 			elif [[ $line =~ $REX_ATM_WITH ]]; then
 			    COUNT=$((COUNT+1))
-			    RETURN_STRING=$(parseATMWith $BASH_REMATCH[@])
+			    parseATMWith "${BASH_REMATCH[@]}"
 			elif [[ $line =~ $REX_ATM_FEE ]]; then
 			    COUNT=$((COUNT+1))
-			    RETURN_STRING=$(parseATMFee $BASH_REMATCH[@])
+			    parseATMFee "${BASH_REMATCH[@]}"
 			fi
-			echo $RETURN_STRING
-
 			shift
 		done < "$1"
 	echo $COUNT
