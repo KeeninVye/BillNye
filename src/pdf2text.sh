@@ -7,6 +7,7 @@ LOG_FILE="$LOG_DIR$(date +%Y%m%d)_log.txt"
 TIMESTAMP=$(env TZ=America/Los_Angeles date)
 IS_FILE=0
 IS_DIR=0
+isCHECKINGS=1
 
 function show_help {
 	echo "Help!"
@@ -35,78 +36,82 @@ function convertToText {
 }
 
 function logToFile() {
-	echo $1 >> "../text/budget.csv"
+	if [ "$isCHECKINGS" -eq 1 ]; then
+		echo $1 >> "../data/$(date +%Y%m%d)_checkings_data.csv"
+	else
+		echo $1 >> "../data/$(date +%Y%m%d)_savings_data.csv"
+	fi
 }
 
-function parsePurchase() {
+function parsePurchase {
 	local STRING=("$@")
-	local PROCESSDATE="${STRING[1]}"
-	local TYPE="${STRING[2]}"
-	local USAGEDATE="${STRING[3]}"
-	local SOURCE="${STRING[4]}"
-	local AMOUNT="${STRING[5]}"
-	local BALANCE="${STRING[6]}"
+	local PROCESSDATE="${STRING[1]//,}"
+	local TYPE="${STRING[2]//,}"
+	local USAGEDATE="${STRING[3]//,}"
+	local SOURCE="${STRING[4]//,}"
+	local AMOUNT="${STRING[5]//,}"
+	local BALANCE="${STRING[6]//,}"
 	local RETURN_STRING="$PROCESSDATE,$TYPE,$USAGEDATE,$SOURCE,$AMOUNT,$BALANCE"
 	logToFile "${RETURN_STRING}"
 }
 
-function parseTransfer() {
+function parseTransfer {
 local STRING=("$@")
 	local PROCESSDATE="${STRING[1]}"
 	local TYPE="Transfer"
 	local USAGEDATE=$PROCESSDATE
-	local SOURCE="${STRING[2]}"
-	local AMOUNT="${STRING[3]}"
-	local BALANCE="${STRING[4]}"
-	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
+	local SOURCE="${STRING[2]//,}"
+	local AMOUNT="${STRING[3]//,}"
+	local BALANCE="${STRING[4]//,}"
+	local RETURN_STRING="$PROCESSDATE,$TYPE,$USAGEDATE,$SOURCE,$AMOUNT,$BALANCE"
 	logToFile "${RETURN_STRING}"
 }
 
 function parseRecurring {
 	local STRING=("$@")
-	local PROCESSDATE="${STRING[1]}"
-	local TYPE="${STRING[2]}"
-	local USAGEDATE="${STRING[3]}"
-	local SOURCE="${STRING[4]}"
-	local AMOUNT="${STRING[5]}"
-	local BALANCE="${STRING[6]}"
-	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
+	local PROCESSDATE="${STRING[1]//,}"
+	local TYPE="${STRING[2]//,}"
+	local USAGEDATE="${STRING[3]//,}"
+	local SOURCE="${STRING[4]//,}"
+	local AMOUNT="${STRING[5]//,}"
+	local BALANCE="${STRING[6]//,}"
+	local RETURN_STRING="$PROCESSDATE,$TYPE,$USAGEDATE,$SOURCE,$AMOUNT,$BALANCE"
 	logToFile "${RETURN_STRING}"
 }
 
 function parseReturn {
 	local STRING=("$@")
-	local PROCESSDATE="${STRING[1]}"
-	local TYPE="${STRING[2]}"
-	local USAGEDATE="${STRING[3]}"
-	local SOURCE="${STRING[4]}"
-	local AMOUNT="${STRING[5]}"
-	local BALANCE="${STRING[6]}"
-	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
+	local PROCESSDATE="${STRING[1]//,}"
+	local TYPE="${STRING[2]//,}"
+	local USAGEDATE="${STRING[3]//,}"
+	local SOURCE="${STRING[4]//,}"
+	local AMOUNT="${STRING[5]//,}"
+	local BALANCE="${STRING[6]//,}"
+	local RETURN_STRING="$PROCESSDATE,$TYPE,$USAGEDATE,$SOURCE,$AMOUNT,$BALANCE"
 	logToFile "${RETURN_STRING}"
 }
 
 function parseATMWith {
 	local STRING=("$@")
-	local PROCESSDATE="${STRING[1]}"
-	local TYPE="${STRING[2]}"
-	local USAGEDATE="${STRING[3]}"
-	local SOURCE="${STRING[4]}"
-	local AMOUNT="${STRING[5]}"
-	local BALANCE="${STRING[6]}"
-	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
+	local PROCESSDATE="${STRING[1]//,}"
+	local TYPE="${STRING[2]//,}"
+	local USAGEDATE="${STRING[3]//,}"
+	local SOURCE="${STRING[4]//,}"
+	local AMOUNT="${STRING[5]//,}"
+	local BALANCE="${STRING[6]//,}"
+	local RETURN_STRING="$PROCESSDATE,$TYPE,$USAGEDATE,$SOURCE,$AMOUNT,$BALANCE"
 	logToFile "${RETURN_STRING}"
 }
 
 function parseATMFee {
 	local STRING=("$@")
-	local PROCESSDATE="${STRING[1]}"
-	local TYPE="${STRING[2]}"
+	local PROCESSDATE="${STRING[1]//,}"
+	local TYPE="${STRING[2]//,}"
 	local USAGEDATE=$PROCESSDATE
 	local SOURCE="ATM Fee"
-	local AMOUNT="${STRING[3]}"
+	local AMOUNT="${STRING[3]//,}"
 	local BALANCE=""
-	local RETURN_STRING="$PROCESSDATE','$TYPE','$USAGEDATE','$SOURCE','$AMOUNT','$BALANCE"
+	local RETURN_STRING="$PROCESSDATE,$TYPE,$USAGEDATE,$SOURCE,$AMOUNT,$BALANCE"
 	logToFile "${RETURN_STRING}"
 }
 
@@ -118,6 +123,7 @@ function parseText {
 	REX_PUR_RETURN=' +([0-9]{2}\/[0-9]{2}) +(Purchase Return) +([0-9]{2}\/[0-9]{2}) (.+)  ([0-9]*.[0-9]{2}) +([,0-9]+\.[0-9]{2})'
 	REX_ATM_WITH=' +([0-9]{2}\/[0-9]{2}) +(Non-Chase ATM Withdraw) +([0-9]{2}\/[0-9]{2}) (.+)  (-[0-9]+.[0-9]{2}) +([0-9]+.[0-9]{2})'
 	REX_ATM_FEE=' +([0-9]{2}\/[0-9]{2}) +(Non-Chase ATM Fee-With) +(-[0-9]*.[0-9]{2}) +(-[0-9]*.[0-9]{2})'
+	REX_SAVINGS=' +SAVINGS SUMMARY'
 
 	if [ "$IS_DIR" -eq 1 ]; then
 		COUNT=0
@@ -136,9 +142,9 @@ function parseText {
 				    COUNT=$((COUNT+1))
 				elif [[ $line =~ $REX_ATM_FEE ]]; then
 				    COUNT=$((COUNT+1))
-
+				elif [[ $line =~ $REX_SAVINGS ]]; then
+					isCHECKINGS=0
 				fi
-
 				shift
 			done < "$TXT_DIR$i"
 		done
@@ -167,6 +173,8 @@ function parseText {
 			elif [[ $line =~ $REX_ATM_FEE ]]; then
 			    COUNT=$((COUNT+1))
 			    parseATMFee "${BASH_REMATCH[@]}"
+			elif [[ $line =~ $REX_SAVINGS ]]; then
+				isCHECKINGS=0
 			fi
 			shift
 		done < "$1"
