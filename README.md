@@ -1,6 +1,6 @@
 # BillNye
 
-Simple Budget Tracker
+A simple tool to parse Chase Bank statements that are in PDF format into a neatly organized CSV for budgeting. Edit
 
 ## Requirements
 * pdftotext
