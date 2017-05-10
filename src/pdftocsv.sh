@@ -1,8 +1,10 @@
 #!/bin/bash
 
-PDF_DIR="pdf/"
-TXT_DIR="text/"
-LOG_DIR="log/"
+CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PDF_DIR="$CWD/../pdf/"
+TXT_DIR="$CWD/../text/"
+LOG_DIR="$CWD/../log/"
+DATA_DIR="$CWD/../data/"
 LOG_FILE="$LOG_DIR$(date +%Y%m%d)_log.txt"
 TIMESTAMP=$(env TZ=America/Los_Angeles date)
 IS_FILE=0
@@ -16,30 +18,11 @@ function tester {
 	echo "$IS_FILE"
 }
 
-function convertToText {
-	if [ "$IS_DIR" -eq 1 ]; then
-		for i in $(ls $1) ; do
-			FILE="${i%%.*}"
-			echo "Directory Convert."
-			echo "[$TIMESTAMP] [INFO]:pdf to text" $i $TXT_DIR$FILE".billing.txt" >> $LOG_FILE
-			pdftotext "-layout" $1$i $TXT_DIR$FILE".billing.txt"
-		done
-	elif [ "$IS_FILE" -eq 1 ]; then
-		BASE=`basename $1`
-		FILE="${BASE%%.*}"
-		echo "File Convert on $BASE."
-		echo "[$TIMESTAMP] [INFO]:pdf to text" $1 $TXT_DIR$FILE".billing.txt" >> $LOG_FILE
-		pdftotext "-layout" $1 $TXT_DIR$FILE".billing.txt"
-	else
-		echo "File or Directory not found."
-	fi
-}
-
 function logToFile() {
 	if [ "$isCHECKINGS" -eq 1 ]; then
-		echo $1 >> "../data/$(date +%Y%m%d)_checkings_data.csv"
+		echo $1 >> "$DATA_DIR$(date +%Y%m%d)_checkings_data.csv"
 	else
-		echo $1 >> "../data/$(date +%Y%m%d)_savings_data.csv"
+		echo $1 >> "$DATA_DIR$(date +%Y%m%d)_savings_data.csv"
 	fi
 }
 
@@ -115,6 +98,24 @@ function parseATMFee {
 	logToFile "${RETURN_STRING}"
 }
 
+function convertToText {
+	if [ "$IS_DIR" -eq 1 ]; then
+		for i in $(ls $1) ; do
+			FILE="${i%%.*}"
+			echo "Directory Convert."
+			echo "[$TIMESTAMP] [INFO]:pdf to text" $i $TXT_DIR$FILE".billing.txt" >> $LOG_FILE
+			pdftotext "-layout" $1$i $TXT_DIR$FILE".billing.txt"
+		done
+	elif [ "$IS_FILE" -eq 1 ]; then
+		BASE=`basename $1`
+		FILE="${BASE%%.*}"
+		echo "[$TIMESTAMP] [INFO]:cmd'pdftotext" $1 $TXT_DIR$FILE".billing.txt'" >> $LOG_FILE
+		pdftotext "-layout" $1 $TXT_DIR$FILE".billing.txt"
+	else
+		echo "File or Directory not found."
+	fi
+}
+
 function parseText {
 
 	REX_PUR=' +([0-9]{2}\/[0-9]{2}) +(Card Purchase[a-zA-Z ]+)([0-9]{2}\/[0-9]{2}) (.+)(-[0-9]+.[0-9]{2}) +([,0-9]+\.[0-9]{2})'
@@ -127,21 +128,28 @@ function parseText {
 
 	if [ "$IS_DIR" -eq 1 ]; then
 		COUNT=0
-		for i in $( ls $TXT_DIR) ; do
+		for i in $( ls $1) ; do
 			FILE="${i%%.*}"
 			while IFS='' read -r line || [[ -n "$line" ]]; do
+				RETURN_STRING=""
 				if [[ $line =~ $REX_PUR ]]; then
 				    COUNT=$((COUNT+1))
+				 	parsePurchase "${BASH_REMATCH[@]}"
 				elif [[ $line =~ $REX_TRANSFER ]]; then
 				    COUNT=$((COUNT+1))
+				    parseTransfer "${BASH_REMATCH[@]}"
 				elif [[ $line =~ $REX_PUR_RECUR ]]; then
 				    COUNT=$((COUNT+1))
+				    parseRecurring "${BASH_REMATCH[@]}"
 				elif [[ $line =~ $REX_PUR_RETURN ]]; then
 				    COUNT=$((COUNT+1))
+					parseReturn "${BASH_REMATCH[@]}"
 				elif [[ $line =~ $REX_ATM_WITH ]]; then
 				    COUNT=$((COUNT+1))
+				    parseATMWith "${BASH_REMATCH[@]}"
 				elif [[ $line =~ $REX_ATM_FEE ]]; then
 				    COUNT=$((COUNT+1))
+				    parseATMFee "${BASH_REMATCH[@]}"
 				elif [[ $line =~ $REX_SAVINGS ]]; then
 					isCHECKINGS=0
 				fi
@@ -182,14 +190,9 @@ function parseText {
 	fi
 }
 
-# A POSIX variable
-#OPTIND=1         # Reset in case getopts has been used previously in the shell.
-
-# Initialize our own variables:
 verbose=0
 CONVERT=0
 PARSE=0
-
 
 if [[ "$1" =~ "^((-{1,2})([Hh]$|[Hh][Ee][Ll][Pp])|)$" ]]; then
 	usage; exit 1
@@ -216,6 +219,20 @@ fi
 #	exit 1
 #fi
 
+if [ ! -d $DATA_DIR ]; then
+	echo "Making 'data' directory for CSV files."
+	mkdir $DATA_DIR
+fi
+
+if [ ! -d $TXT_DIR ]; then
+	echo "Making 'text' directory for text files."
+	mkdir $TXT_DIR
+fi
+
+if [ ! -d $LOG_DIR ]; then
+	echo "Making 'log' directory for log files."
+	mkdir $LOG_DIR
+fi
 
 if [ -z "$1" ]; then
     echo "No directory given."
