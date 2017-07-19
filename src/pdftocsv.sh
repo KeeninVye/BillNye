@@ -19,11 +19,21 @@ function tester {
 }
 
 function logToFile() {
+	echo $1
 	if [ "$isCHECKINGS" -eq 1 ]; then
 		echo $1 >> "$DATA_DIR$(date +%Y%m%d)_checkings_data.csv"
 	else
 		echo $1 >> "$DATA_DIR$(date +%Y%m%d)_savings_data.csv"
 	fi
+}
+
+function parseCredit {
+	local STRING=("$@")
+	local PROCESSDATE="${STRING[1]//,}"
+	local SOURCE="${STRING[2]//,}"
+	local AMOUNT="${STRING[3]//,}"
+	local RETURN_STRING="$PROCESSDATE,$SOURCE,$AMOUNT"
+	logToFile "${RETURN_STRING}"
 }
 
 function parsePurchase {
@@ -124,6 +134,7 @@ function parseText {
 	REX_PUR_RETURN=' +([0-9]{2}\/[0-9]{2}) +(Purchase Return) +([0-9]{2}\/[0-9]{2}) (.+)  ([0-9]*.[0-9]{2}) +([,0-9]+\.[0-9]{2})'
 	REX_ATM_WITH=' +([0-9]{2}\/[0-9]{2}) +(Non-Chase ATM Withdraw) +([0-9]{2}\/[0-9]{2}) (.+)  (-[0-9]+.[0-9]{2}) +([0-9]+.[0-9]{2})'
 	REX_ATM_FEE=' +([0-9]{2}\/[0-9]{2}) +(Non-Chase ATM Fee-With) +(-[0-9]*.[0-9]{2}) +(-[0-9]*.[0-9]{2})'
+	REX_CREDIT='([0-9]{2}\/[0-9]{2}) + (.+ )([0-9]+.[0-9]{2})'
 	REX_SAVINGS=' +SAVINGS SUMMARY'
 
 	if [ "$IS_DIR" -eq 1 ]; then
@@ -163,26 +174,30 @@ function parseText {
 		COUNT=0
 		while IFS='' read -r line || [[ -n "$line" ]]; do
 			RETURN_STRING=""
-			if [[ $line =~ $REX_PUR ]]; then
-			    COUNT=$((COUNT+1))
-			 	parsePurchase "${BASH_REMATCH[@]}"
-			elif [[ $line =~ $REX_TRANSFER ]]; then
-			    COUNT=$((COUNT+1))
-			    parseTransfer "${BASH_REMATCH[@]}"
-			elif [[ $line =~ $REX_PUR_RECUR ]]; then
-			    COUNT=$((COUNT+1))
-			    parseRecurring "${BASH_REMATCH[@]}"
-			elif [[ $line =~ $REX_PUR_RETURN ]]; then
-			    COUNT=$((COUNT+1))
-				parseReturn "${BASH_REMATCH[@]}"
-			elif [[ $line =~ $REX_ATM_WITH ]]; then
-			    COUNT=$((COUNT+1))
-			    parseATMWith "${BASH_REMATCH[@]}"
-			elif [[ $line =~ $REX_ATM_FEE ]]; then
-			    COUNT=$((COUNT+1))
-			    parseATMFee "${BASH_REMATCH[@]}"
-			elif [[ $line =~ $REX_SAVINGS ]]; then
-				isCHECKINGS=0
+#			if [[ $line =~ $REX_PUR ]]; then
+#			    COUNT=$((COUNT+1))
+#			 	parsePurchase "${BASH_REMATCH[@]}"
+#			elif [[ $line =~ $REX_TRANSFER ]]; then
+#			    COUNT=$((COUNT+1))
+#			    parseTransfer "${BASH_REMATCH[@]}"
+#			elif [[ $line =~ $REX_PUR_RECUR ]]; then
+#			    COUNT=$((COUNT+1))
+#			    parseRecurring "${BASH_REMATCH[@]}"
+#			elif [[ $line =~ $REX_PUR_RETURN ]]; then
+#			    COUNT=$((COUNT+1))
+#				parseReturn "${BASH_REMATCH[@]}"
+#			elif [[ $line =~ $REX_ATM_WITH ]]; then
+#			    COUNT=$((COUNT+1))
+#			    parseATMWith "${BASH_REMATCH[@]}"
+#			elif [[ $line =~ $REX_ATM_FEE ]]; then
+#			    COUNT=$((COUNT+1))
+#			    parseATMFee "${BASH_REMATCH[@]}"
+#			elif [[ $line =~ $REX_SAVINGS ]]; then
+#				isCHECKINGS=0
+#			fi
+			if [[ $line =~ $REX_CREDIT ]]; then
+				COUNT=$((COUNT+1))
+				parseCredit "${BASH_REMATCH[@]}"
 			fi
 			shift
 		done < "$1"

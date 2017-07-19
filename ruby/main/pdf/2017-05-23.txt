@@ -1,0 +1,385 @@
+                                                                                                                              April 26, 2017 through May 23, 2017
+                                              JPMorgan Chase Bank, N.A.
+                                                                                                                            Primary Account:   000000467092628
+                                              P O Box 659754
+
+                                              San Antonio, TX 78265 - 9754
+
+
+                                                                                                                     CUSTOMER SERVICE INFORMATION
+
+                                                                                                                     Web site:                            Chase.com
+                                                                                                                     Service Center:                  1-800-935-9935
+                                              00016433 DRE 702 219 14417 NNNNNNNNNNN   1 000000000 17 0000           Deaf and Hard of Hearing:        1-800-242-7383
+
+                                                                                                                     Para Espanol:                    1-877-312-4273
+                                              KEENIN C VYE
+                                                                                                                     International Calls:             1-713-262-1679
+                                              OR LOUISE A VYE
+                                              1622 33RD AVE
+                                              SEATTLE WA 98122-3328
+
+
+
+
+                                                                                                                                                                                 00164330201000000022
+ *start*consolidated balance summary2
+
+
+
+
+                  CONSOLIDATED BALANCE SUMMARY
+             ASSETS
+
+
+             Checking & Savings
+
+             Chase Total Checking                                                            000000467092628                                     $844.23              $796.40
+
+             Chase Savings                                                                   000003580823358                                    14,400.37            16,100.48
+
+             Total                                                                                                                             $15,244.60           $16,896.88
+
+
+             TOTAL ASSETS                                                                                                                      $15,244.60           $16,896.88
+ *end*consolidated balance summary2
+
+ *start*message after consolidated summary1
+
+
+
+
+          All Summary Balances                                      shown are as of May 23, 2017 unless otherwise stated.   For details of your retirement accounts,
+          credit accounts or securities accounts, you will receive separate statements.                               Balance summary information for annuities is
+          provided by the issuing insurance companies and believed to be reliable without guarantee of its completeness or
+          accuracy.
+ *end*message after consolidated summary1
+
+
+
+
+*start*global product
+
+
+
+
+                CHASE TOTAL CHECKING
+                 KEENIN C VYE                                                                                                  Account Number: 000000467092628
+
+
+                 OR LOUISE A VYE
+*end*global product
+*start*summary
+
+
+
+
+              CHECKING SUMMARY
+            Beginning Balance                                                                                       $844.23
+            Deposits and Additions                                                                                 6,171.89
+
+            ATM & Debit Card Withdrawals                                                                            -840.93
+
+            Electronic Withdrawals                                                                                 -5,339.79
+
+            Fees                                                                                                      -39.00
+
+            Ending Balance                                                                                          $796.40
+*end*summary
+
+
+
+
+                                                                                                                                                      Page 1 of 4
+                                                                                                      April 26, 2017 through May 23, 2017
+
+
+                                                                                                     Primary Account:   000000467092628
+
+
+
+
+*start*transaction detail
+
+
+
+
+           TRANSACTION DETAIL
+
+                             Beginning Balance                                                                                                  $844.23
+             04/26          Card Purchase         04/25 Piroshky Piroshky Baker Seattle WA Card 1749                      -7.51                  836.72
+
+             04/27          Chase Quickpay Electronic Transfer 6180390840 From Tia A Porcincula                         500.00              1,336.72
+
+             04/27          Card Purchase         04/26 Sq *Pokealice Seattle WA Card 1749                                -9.80             1,326.92
+
+             04/28          Comcast         Payroll             PPD ID: 1695217679                                  2,089.52                3,416.44
+
+             04/28          Card Purchase         04/27 Sq *Seattle Coffee Work Seattle WA Card 1749                      -3.00             3,413.44
+
+             04/28          Online Transfer To Sav ...3358 Transaction#: 6149616311                                -1,100.00                2,313.44
+
+             04/28          Chase Quickpay Electronic Transfer 6183734595 To Tia Alexa Porcincula                       -500.00             1,813.44
+
+             04/28          Non-Chase ATM Withdraw 04/28 3775 W Commodore Way Seattle WA                                 -82.95             1,730.49
+                            Card 1749
+
+             04/28          Non-Chase ATM Fee-With                                                                        -2.50             1,727.99
+
+             05/01          Card Purchase         04/28 El Borracho Taqueria Y Seattle WA Card 1749                      -16.00             1,711.99
+
+             05/01          Chase Quickpay Electronic Transfer 6187840433 To Thach Nguyen                          -1,050.00                     661.99
+
+             05/01          05/01 Payment To Chase Card Ending IN 6042                                                  -481.57                  180.42
+
+             05/04          Online Transfer From Sav ...3358 Transaction#: 6199708281                                   500.00                   680.42
+
+             05/04          Card Purchase         05/04 Tm *Seattle Mariners 206-628-0888 CA Card                       -156.67                  523.75
+                            1749
+
+             05/04          05/04 Payment To Chase Card Ending IN 6042                                                  -506.92                   16.83
+
+             05/08          Recurring Card Purchase 05/07 Vnyl 424-294-8695 CA Card 1749                                 -39.00                  -22.17
+
+             05/08          Insufficient Funds Fee For A $39.00 Recurring Card Purchase - Details:                       -34.00                  -56.17
+                            0507Vnyl 424-294-8695 CA               04867967018811749
+                            01
+
+             05/09          Purchase Return           05/09 Sqc*<Square Cash   San Francisco CA Card                    500.00                   443.83
+                            1749
+
+             05/09          Purchase Return           05/09 Sqc*<Square Cash   San Francisco CA Card                    158.22                   602.05
+                            1749
+
+             05/12          Comcast         Payroll             PPD ID: 1695217679                                  2,401.15                3,003.20
+
+             05/12          Online Transfer To Sav ...3358 Transaction#: 6181848720                                -1,100.00                1,903.20
+
+             05/15          Card Purchase         05/12 Paypal *Onnit Labs On 402-935-7733 TX Card                       -99.27             1,803.93
+                            1749
+
+             05/15          Card Purchase         05/13 Steamgames.Com 425-952-2985 WA Card                               -9.77             1,794.16
+                            1749
+
+             05/15          Card Purchase         05/13 Massdrop     1895208 4153402999 CA Card                          -36.74             1,757.42
+                            1749
+
+             05/15          Card Purchase         05/14 Sqc*Tia Porcincula .   / CA Card 1749                            -31.99             1,725.43
+
+             05/16          Purchase Return           05/16 Sqc*<Square Cash   San Francisco CA Card                     10.00              1,735.43
+                            1749
+
+             05/16          Card Purchase         05/16 Amazon.Com Amzn.Com/Bill WA Card 1749                            -33.15             1,702.28
+
+             05/16          Card Purchase         05/16 Amazon.Com Amzn.Com/Bill WA Card 1749                            -33.15             1,669.13
+
+             05/16          Card Purchase         05/16 Amazon.Com Amzn.Com/Bill WA Card 1749                            -33.15             1,635.98
+
+             05/16          Non-Chase ATM Withdraw 05/16 3775 W Commodore Way Seattle WA                                 -62.95             1,573.03
+                            Card 1749
+
+             05/16          Non-Chase ATM Fee-With                                                                        -2.50             1,570.53
+
+             05/19          Purchase Return           05/19 Sqc*<Square Cash   San Francisco CA Card                     13.00              1,583.53
+                            1749
+
+             05/19          Card Purchase         05/18 Amazon.Com Amzn.Com/Bill WA Card 1749                            -33.15             1,550.38
+
+             05/19          Card Purchase         05/18 Amazon.Com Amzn.Com/Bill WA Card 1749                            -33.15             1,517.23
+
+             05/22          Card Purchase         05/19 Sqc*Brandon Taylor .    / CA Card 1749                           -68.37             1,448.86
+*end*transaction detail
+
+
+
+
+                                                                                                                                  Page 2 of 4
+                                                                                                                              April 26, 2017 through May 23, 2017
+
+
+                                                                                                                          Primary Account:   000000467092628
+
+
+
+
+ *start*transaction detail
+
+
+
+
+                                                                                 (continued)
+           TRANSACTION DETAIL
+
+              05/22                               Card Purchase          05/21 Sqc*Sam Kaplan .   / CA Card 1749                                -47.09             1,401.77
+
+              05/23                               Card Purchase          05/22 Steamgames.Com42595229 425-9522985 WA                             -4.07             1,397.70
+
+
+
+
+                                                                                                                                                                                 10164330202000000062
+                                                  Card 1749
+
+              05/23                               05/23 Payment To Chase Card Ending IN 6042                                                 -601.30                    796.40
+
+                                                    Ending Balance                                                                                                     $796.40
+ *end*transaction detail
+
+
+
+   *start*post transaction detail message
+
+
+
+
+            A monthly Service Fee was                              not   charged to your Chase Total Checking account.   Here are the three ways you can avoid
+            this fee during any statement period.
+
+
+            ·                               Have direct deposits totaling $500.00 or more.
+                                            (Your total direct deposits this period were $4,490.67. Note: some deposits may be listed on your previous statement)
+
+
+            ·                               OR, keep a minimum daily balance in this checking account of $1,500.00 or more
+                                            (Your minimum daily balance was -$56.17)
+
+
+            ·                               OR, keep an average daily balance of qualifying linked deposits and investments of $5,000.00 or more
+                                            (Your average daily balance of qualifying linked deposits and investments was $16,498.62)
+   *end*post transaction detail message
+
+
+
+*start*overdraft and returned item
+
+
+
+
+     OVERDRAFT AND RETURNED ITEM FEE SUMMARY
+                                                                                                                                    Total for                            Total
+                                                                                                                                 This Period                 Year-to-date
+
+        Total Overdraft Fees *                                                                                                        $34.00                           $34.00
+
+        Total Returned Item Fees                                                                                                         $.00                            $.00
+
+
+        * Total Overdraft Fees includes Insufficient Funds Fees, and Extended Overdraft Fees
+
+*end*overdraft and returned item
+
+
+
+
+         *start*global product
+
+
+
+
+                             CHASE SAVINGS
+                             KEENIN C VYE                                                                                      Account Number: 000003580823358
+
+
+
+         *end*global product
+         *start*summary
+
+
+
+
+                                       SAVINGS SUMMARY
+                      Beginning Balance                                                                         $14,400.37
+                      Deposits and Additions                                                                       2,200.11
+
+                      Electronic Withdrawals                                                                        -500.00
+
+                      Ending Balance                                                                            $16,100.48
+
+                      Annual Percentage Yield Earned This Period                                                    0.01%
+
+                      Interest Paid This Period                                                                      $0.11
+
+                      Interest Paid Year-to-Date                                                                     $0.43
+         *end*summary
+
+
+
+
+                                                                                                                                                         Page 3 of 4
+                                                                                                                                          April 26, 2017 through May 23, 2017
+
+
+                                                                                                                                      Primary Account:    000000467092628
+
+
+
+ *start*transaction detail
+
+
+
+
+            TRANSACTION DETAIL
+
+                                               Beginning Balance                                                                                                             $14,400.37
+              04/28                           Online Transfer From Chk ...2628 Transaction#: 6149616311                                                 1,100.00              15,500.37
+
+              05/04                           05/04 Online Transfer To Chk ...2628 Transaction#: 6199708281                                              -500.00              15,000.37
+
+              05/12                           Online Transfer From Chk ...2628 Transaction#: 6181848720                                                 1,100.00              16,100.37
+
+              05/16                           Interest Payment                                                                                              0.11              16,100.48
+
+                                               Ending Balance                                                                                                                $16,100.48
+ *end*transaction detail
+
+
+
+   *start*post transaction detail message
+
+
+
+
+            A monthly Service Fee was                             not   charged to your Chase Savings account.             You can continue to avoid this fee during any
+            statement period by keeping a minimum daily balance in your account of $300.00 or more.
+            (Your minimum daily balance was $14,400)
+   *end*post transaction detail message
+
+
+
+*start*dre portrait disclosure message area
+
+
+
+
+                  IN CASE OF ERRORS OR QUESTIONS ABOUT YOUR ELECTRONIC FUNDS TRANSFERS:                                                   Call or write us at the phone number or address
+
+                  on the front of this statement (non-personal accounts contact Customer Service) if you think your statement or receipt is incorrect or if you need
+
+                  more information about a transfer listed on the statement or receipt.                  We must hear from you no later than 60 days after we sent you the FIRST
+
+                  statement on which the problem or error appeared.                   Be prepared to give us the following information:
+
+                                               Your name and account number
+                                               The dollar amount of the suspected error
+                                               A description of the error or transfer you are unsure of, why you believe it is an error, or why you need more information.
+                  We will investigate your complaint and will correct any error promptly. If we take more than 10 business days (or 20 business days for new
+                  accounts) to do this, we will credit your account for the amount you think is in error so that you will have use of the money during the time it takes
+                  us to complete our investigation .
+
+
+                  IN CASE OF ERRORS OR QUESTIONS ABOUT NON-ELECTRONIC TRANSACTIONS:                                               Contact the bank immediately if your statement is
+                  incorrect or if you need more information about any non-electronic transactions (checks or deposits) on this statement. If any such error appears,
+                  you must notify the bank in writing no later than 30 days after the statement was made available to you. For more complete details, see the
+                  Account Rules and Regulations or other applicable account agreement that governs your account.
+
+
+
+
+                                                                                                                                           JPMorgan Chase Bank, N.A. Member FDIC
+*end*dre portrait disclosure message area
+
+
+
+
+                                                                                                                                                                   Page 4 of 4
+

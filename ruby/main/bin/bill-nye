@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+require_relative '../lib/bill-nye/version'
+require_relative '../lib/bill-nye/bnlogger'
+require_relative '../lib/bill-nye'
+require 'micro-optparse'
+require 'yajl'
+
+module BillNye
+
+  # define what a valid Config file argument is
+  def self.validConfigArgument?(x)
+    #must explicitly get set to 'true'
+    answer = false
+
+    begin
+      # must successfully open file, and deserialize into a ruby hash
+      json = File.read(x)
+      parser = Yajl::Parser.new
+      @config = parser.parse json
+
+      # TODO: add additional json requirements here, if needed
+      #
+      # TODO <end>
+
+      # if we made it this far, we're valid
+      answer = true
+    rescue => e
+      # if we fail to open, parse, etc...this is not a valid configArgument
+      puts e
+      return false
+    end
+
+    return answer
+
+  end
+
+  options = Parser.new do |p|
+    p.banner = "This is the Media Requester"
+    p.version = "media-requester" + VERSION
+    #p.option :config, "config file (valid json)", :default => 'config.json', :value_satisfies => lambda {|x| validConfigArgument?(x) }
+  end.process!
+
+  BNLogger.configure
+  BNLogger.log.info { "Started." }
+
+  processor = BillNye.new#(@config, options[:retry])
+  processor.parse_pdf('pdf/2017-05-23.pdf')
+
+  #Logger.log.info { "Exited normally." }
+
+end

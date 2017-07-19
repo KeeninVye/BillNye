@@ -1,0 +1,6 @@
+{
+  "logging": {
+    "file": "/var/log/app/media-requester/media-requester-test.log",
+    "level": "debug"
+  }
+}

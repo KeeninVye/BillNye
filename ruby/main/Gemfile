@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+#source 'http://corptprepo02:8080/'
+
+# Specify your gem's dependencies in akamai-reseller-streaming-usage-collector.gemspec
+gemspec
