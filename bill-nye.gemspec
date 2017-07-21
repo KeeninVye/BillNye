@@ -13,8 +13,8 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Just what the description says.}
   gem.homepage      = "https://github.com/KeeninVye/BillNye"
   gem.license       = 'MIT'
-  #gem.add_dependency 'micro-optparse'
-  #gem.add_dependency 'yajl-ruby'
+  gem.add_dependency 'micro-optparse'
+  gem.add_dependency 'yajl-ruby'
   #gem.add_dependency 'logger'
 
   #gem.add_development_dependency 'bundler'
