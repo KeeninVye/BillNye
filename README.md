@@ -1,6 +1,6 @@
 # Bill::Nye
 
-TODO: Write a gem description
+A library to facilitate in parsing and getting data from Chase Bank statements.
 
 ## Installation
 
@@ -14,11 +14,25 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install bill-nye
+    $ gem install BillNye
 
 ## Usage
 
-TODO: Write usage instructions here
+	To parse a single Chase Bank debit card statement:
+	$ b = BillNye.new
+  	$ b.parse_pdf('path/to/bank/statement.pdf', 1)
+
+	To parse multiple Chase Bank debit card statements:
+  	$ b.parse_pdfs('path/to/bank/statements/', 1)
+
+  	The second argument of the parse_pds(s) function determines what type of statement you are going to parse.
+
+	To parse a single Chase Bank credit card statement:
+	$ b = BillNye.new
+  	$ b.parse_pdf('path/to/bank/statement.pdf', 2)
+
+	To parse multiple Chase Bank credit card statements:
+  	$ b.parse_pdfs('path/to/bank/statements/', 2)
 
 ## Contributing
 
