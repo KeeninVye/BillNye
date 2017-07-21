@@ -44,7 +44,7 @@ module BillNye
   BNLogger.log.info { "Started." }
 
   processor = BillNye.new#(@config, options[:retry])
-  processor.parse_pdf('pdf/2017-05-23.pdf')
+  processor.parse_pdf('pdf/2017-06-23-debit.pdf', 1)
 
   #Logger.log.info { "Exited normally." }
 

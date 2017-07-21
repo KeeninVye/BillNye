@@ -1,11 +1,29 @@
-# BillNye
+# Bill::Nye
 
-A simple tool to parse Chase Bank statements that are in PDF format into a neatly organized CSV for budgeting. Edit
+TODO: Write a gem description
 
-## Requirements
-* pdftotext
+## Installation
 
-### Mac users
-```brew install poppler```
+Add this line to your application's Gemfile:
 
--![alt text](https://media.giphy.com/media/X8omQqfFyeq1a/giphy.gif "Frustrated cat can't believe this is the 12th time he's clicked on an auto-linked README.md URL")
+    gem 'bill-nye'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install bill-nye
+
+## Usage
+
+TODO: Write usage instructions here
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
