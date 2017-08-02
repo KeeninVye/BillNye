@@ -17,7 +17,7 @@ module BillNye
 		@REX_PUR_RETURN = / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Purchase Return) +(?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+)  (?<amount>[-,0-9]*.[0-9]{2}) +(?<balance>[-,0-9]+\.[0-9]{2})/
 		@REX_ATM_WITH 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Non-Chase ATM Withdraw) +(?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+)  (?<amount>[-,0-9]+.[0-9]{2}) +(?<balance>[-,0-9]+.[0-9]{2})/
 		@REX_ATM_FEE 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>.*Fee.*) +(?<amount>[-,0-9]*.[0-9]{2}) +(?<balance>[-,0-9,]*.[0-9]{2})/
-		@REX_CREDIT 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) + (?<source>.+ )(?<amount>[-,0-9]+.[0-9]{2})/
+		@REX_CREDIT 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) + (?<source>.+ )(?<amount>[-,0-9]+\.[0-9]{2})/
 		@REX_SAVINGS 	= / +SAVINGS SUMMARY/
 
 		@log = BNLogger.log
@@ -50,13 +50,13 @@ module BillNye
 			file_handle.each_line do |line|
 				case type
 				when 1
-					_debit = parse_debit(line)
+					_xaction = parse_debit(line)
 				when 2
-					_debit = parse_credit
+					_xaction = parse_credit(line)
 				end
 
-				if !_debit.nil?
-					_xactions << _debit
+				if !_xaction.nil?
+					_xactions << _xaction
 				end
 			end
 		end
@@ -65,7 +65,16 @@ module BillNye
   	end
 
 	def parse_credit(line)
-		match		= @REX_CREDIT.match(line)
+		_credit = nil
+		if !@REX_CREDIT.match(line).nil?
+			_match 	= @REX_CREDIT.match(line)
+			_credit = credit_default(_match)
+			@log.info{ "Match CREDIT: #{_credit}" }
+		end
+		return _credit
+	end
+
+	def credit_default(match)
 		processDate = match[:process_date].strip
 		type 		= "Credit"
 		source 		= match[:source].strip
@@ -78,27 +87,27 @@ module BillNye
   		begin
 	  		if !@REGEX_PURCHASE.match(line).nil?
 	  			_match 	= @REGEX_PURCHASE.match(line)
-	  			_debit = parse_default(_match)
+	  			_debit = debit_default(_match)
 		  		@log.info{ "Match PURCHASE: #{_debit}" }
 	 		elsif !@REX_PUR_RECUR.match(line).nil?
 	  			_match	= @REX_PUR_RECUR.match(line)
-	  			_debit = parse_default(_match)
+	  			_debit = debit_default(_match)
 		  		@log.info{ "Match PURCHASE RECURRING: #{_debit}" }
 	  		elsif !@REX_PUR_RETURN.match(line).nil?
 	  			_match	= @REX_PUR_RETURN.match(line)
-	  			_debit = parse_default(_match)
+	  			_debit = debit_default(_match)
 		  		@log.info{ "Match PURCHASE RETURN: #{_debit}" }
 	  		elsif !@REX_ATM_WITH.match(line).nil?
 	  			_match	= @REX_ATM_WITH.match(line)
-	  			_debit = parse_atm_with(_match)
+	  			_debit = debit_atm_with(_match)
 		  		@log.info{ "Match ATM WITH: #{_debit}" }
 	  		elsif !@REX_ATM_FEE.match(line).nil?
 	  			_match	= @REX_ATM_FEE.match(line)
-	  			_debit = parse_transfer_or_fee(_match)
+	  			_debit = debit_transfer_or_fee(_match)
 		  		@log.info{ "ATM FEE: #{_debit}" }
 	  		elsif !@REX_TRANSFER.match(line).nil?
 	  			_match	= @REX_TRANSFER.match(line)
-	   			_debit = parse_transfer_or_fee(_match)
+	   			_debit = debit_transfer_or_fee(_match)
 		  		@log.info{ "Match TRANSFER: #{_debit}" }
 		  	else
 		  		@log.error{ "NO-MATCH on: #{_debit}" }
@@ -109,7 +118,7 @@ module BillNye
 	  	return _debit
   	end
 
-	def parse_default(match)
+	def debit_default(match)
 		processDate = match[:process_date].strip
 		source 		= match[:source].strip
 		amount 		= match[:amount].strip
@@ -119,7 +128,7 @@ module BillNye
 		return Debit.new(processDate, type, usageDate, source, amount, balance)
 	end
 
-	def parse_transfer_or_fee(match)
+	def debit_transfer_or_fee(match)
 		processDate = match[:process_date].strip
 		type 		= match[:type].strip
 		usageDate 	= processDate
@@ -129,7 +138,7 @@ module BillNye
 		return Debit.new(processDate, type, usageDate, source, amount, balance)
 	end
 
-	def parse_atm_with(match)
+	def debit_atm_with(match)
 		processDate = match[:process_date].strip
 		source 		= match[:type].strip
 		amount 		= match[:amount].strip
