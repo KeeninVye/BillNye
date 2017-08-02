@@ -44,8 +44,35 @@ module BillNye
   BNLogger.log.info { "Started." }
 
   processor = BillNye.new#(@config, options[:retry])
-  processor.parse_pdf('pdf/2017-06-23-debit.pdf', 1)
+  
+  Dir.foreach('/Users/keeninvye/playground/dev/ruby/BillNye/pdf/') do |pdf|
+    if not pdf =~ /^\.\.?$/ 
+      if pdf.include? ".pdf"
+        p pdf
+        _match    = /(?<filename>.+).pdf/.match(pdf)
+        p _match
+        txt     = "#{_match[:filename]}.txt"
 
+        begin
+          if txt.include? "credit"
+            _xaction_list = processor.parse_pdf("pdf/#{pdf}", 2)
+          else
+            _xaction_list = processor.parse_pdf("pdf/#{pdf}", 1)
+          end
+          _xaction_list.each do |item|
+            File.open(txt, "w") do |file|
+              file.write(item)
+            end
+          end
+        rescue
+          p "Failed to convert #{pdf} to text."
+        end
+      end
+    end
+  end
+
+  #x = processor.parse_pdf('pdf/2017-05-10-credit-6042.pdf', 2)
+  #p x.length
   #Logger.log.info { "Exited normally." }
 
 end
