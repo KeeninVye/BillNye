@@ -8,4 +8,14 @@ class Credit
 		@source  = _source
 		@amount  = _amount
 	end
+
+	def to_string
+		return"#{@pDate},#{@type},#{@uDate},#{@source},#{@amount}\n"
+	end
+
+	attr_reader :pDate
+	attr_reader :type
+	attr_reader :uDate
+	attr_reader :source
+	attr_reader :amount
 end

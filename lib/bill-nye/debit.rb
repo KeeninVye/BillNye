@@ -9,4 +9,15 @@ class Debit
 		@amount  = _amount
 		@balance = _balance
 	end
+
+	def to_string
+		return"#{@pDate},#{@type},#{@uDate},#{@source},#{@amount},#{@balance}\n"
+	end
+	
+	attr_reader :pDate
+	attr_reader :type
+	attr_reader :uDate
+	attr_reader :source
+	attr_reader :amount
+	attr_reader :balance
 end

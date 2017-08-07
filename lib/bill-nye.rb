@@ -11,12 +11,12 @@ module BillNye
   class BillNye
 
     def initialize()
-    	@REGEX_PURCHASE = / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Card Purchase[a-zA-Z ]+)(?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+)(?<amount>[-,0-9]+.[0-9]{2}) +(?<balance>[-,0-9]+\.[0-9]{2})/
-    	@REX_TRANSFER 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>[a-zA-Z .0-9#:]+) +(?<amount>[-,0-9,]+.[0-9]{2}) +(?<balance>[-,0-9,]+.[0-9]{2})/
-		@REX_PUR_RECUR 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Recurring Card Purchase) (?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+) *(?<amount>[-,0-9]+.[0-9]{2}) +(?<balance>[-,0-9]+\.[0-9]{2})/
-		@REX_PUR_RETURN = / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Purchase Return) +(?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+)  (?<amount>[-,0-9]*.[0-9]{2}) +(?<balance>[-,0-9]+\.[0-9]{2})/
-		@REX_ATM_WITH 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Non-Chase ATM Withdraw) +(?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+)  (?<amount>[-,0-9]+.[0-9]{2}) +(?<balance>[-,0-9]+.[0-9]{2})/
-		@REX_ATM_FEE 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>.*Fee.*) +(?<amount>[-,0-9]*.[0-9]{2}) +(?<balance>[-,0-9,]*.[0-9]{2})/
+    	@REGEX_PURCHASE = / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Card Purchase[a-zA-Z ]+)(?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+ )(?<amount>[-,0-9]+\.[0-9]{2}) +(?<balance>[-,0-9]+\.[0-9]{2})/
+    	@REX_TRANSFER 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>[a-zA-Z .0-9#:]+ ) +(?<amount>[-,0-9]+\.[0-9]{2}) +(?<balance>[-,0-9,]+\.[0-9]{2})/
+		@REX_PUR_RECUR 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Recurring Card Purchase) (?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+ ) *(?<amount>[-,0-9]+\.[0-9]{2}) +(?<balance>[-,0-9]+\.[0-9]{2})/
+		@REX_PUR_RETURN = / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Purchase Return) +(?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+ )  (?<amount>[-,0-9]*\.[0-9]{2}) +(?<balance>[-,0-9]+\.[0-9]{2})/
+		@REX_ATM_WITH 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>Non-Chase ATM Withdraw) +(?<usage_date>[0-9]{2}\/[0-9]{2}) (?<source>.+ )(?<amount>[-,0-9]+\.[0-9]{2}) +(?<balance>[-,0-9]+\.[0-9]{2})/
+		@REX_ATM_FEE 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) +(?<type>.*Fee.*) +(?<amount>[-,0-9]*.[0-9]{2}) +(?<balance>[-,0-9]*\.[0-9]{2})/
 		@REX_CREDIT 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) + (?<source>.+ )(?<amount>[-,0-9]+\.[0-9]{2})/
 		@REX_SAVINGS 	= / +SAVINGS SUMMARY/
 
@@ -78,7 +78,7 @@ module BillNye
 		processDate = match[:process_date].strip
 		type 		= "Credit"
 		source 		= match[:source].strip
-		amount 		= match[:amount].strip
+		amount 		= match[:amount].gsub(/[\s,]/ ,"")
 		return Credit.new(processDate, type, source, amount)
 	end
 
@@ -121,10 +121,10 @@ module BillNye
 	def debit_default(match)
 		processDate = match[:process_date].strip
 		source 		= match[:source].strip
-		amount 		= match[:amount].strip
+		amount 		= match[:amount].gsub(/[\s,]/ ,"")
 		type 		= match[:type].strip
 		usageDate	= match[:usage_date].strip
-		balance		= match[:balance].strip
+		balance		= match[:balance].gsub(/[\s,]/ ,"")
 		return Debit.new(processDate, type, usageDate, source, amount, balance)
 	end
 
@@ -133,18 +133,18 @@ module BillNye
 		type 		= match[:type].strip
 		usageDate 	= processDate
 		source 		= ""
-		amount 		= match[:amount].strip
-		balance		= match[:balance].strip
+		amount 		= match[:amount].gsub(/[\s,]/ ,"")
+		balance		= match[:balance].gsub(/[\s,]/ ,"")
 		return Debit.new(processDate, type, usageDate, source, amount, balance)
 	end
 
 	def debit_atm_with(match)
 		processDate = match[:process_date].strip
 		source 		= match[:type].strip
-		amount 		= match[:amount].strip
+		amount 		= match[:amount].gsub(/[\s,]/ ,"")
 		type 		= match[:type].strip
 		usageDate	= processDate
-		balance		= match[:balance].strip
+		balance		= match[:balance].gsub(/[\s,]/ ,"")
 		return Debit.new(processDate, type, usageDate, source, amount, balance)
 	end
 

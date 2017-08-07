@@ -44,14 +44,12 @@ module BillNye
   BNLogger.log.info { "Started." }
 
   processor = BillNye.new#(@config, options[:retry])
-  
-  Dir.foreach('/Users/keeninvye/playground/dev/ruby/BillNye/pdf/') do |pdf|
+  p __dir__
+  Dir.foreach("#{__dir__}/../pdf/") do |pdf|
     if not pdf =~ /^\.\.?$/ 
       if pdf.include? ".pdf"
-        p pdf
         _match    = /(?<filename>.+).pdf/.match(pdf)
-        p _match
-        txt     = "#{_match[:filename]}.txt"
+        txt     = "#{_match[:filename]}.csv"
 
         begin
           if txt.include? "credit"
@@ -59,9 +57,9 @@ module BillNye
           else
             _xaction_list = processor.parse_pdf("pdf/#{pdf}", 1)
           end
-          _xaction_list.each do |item|
-            File.open(txt, "w") do |file|
-              file.write(item)
+          File.open(txt, "w") do |file|
+            _xaction_list.each do |item|
+              file.write("#{item.to_string}")
             end
           end
         rescue
