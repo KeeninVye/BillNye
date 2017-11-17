@@ -49,17 +49,19 @@ module BillNye
     if not pdf =~ /^\.\.?$/ 
       if pdf.include? ".pdf"
         _match    = /(?<filename>.+).pdf/.match(pdf)
-        txt     = "#{_match[:filename]}.csv"
-
+        txt       = "#{_match[:filename]}.csv"
+        data_file = 'data_file.csv'
         begin
           if txt.include? "credit"
             _xaction_list = processor.parse_pdf("pdf/#{pdf}", 2)
           else
             _xaction_list = processor.parse_pdf("pdf/#{pdf}", 1)
           end
-          File.open('data/'+txt, "w") do |file|
+          File.open('data/'+data_file, "a") do |file|
+            count = 1
             _xaction_list.each do |item|
-              file.write("#{item.to_string}")
+              file.write("#{_match[:filename]}-#{count},#{item.to_string}")
+              count = count + 1
             end
           end
         rescue
