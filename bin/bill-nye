@@ -57,7 +57,7 @@ module BillNye
           else
             _xaction_list = processor.parse_pdf("pdf/#{pdf}", 1)
           end
-          File.open(txt, "w") do |file|
+          File.open('data/'+txt, "w") do |file|
             _xaction_list.each do |item|
               file.write("#{item.to_string}")
             end

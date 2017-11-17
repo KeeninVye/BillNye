@@ -20,7 +20,7 @@ module BillNye
 		@REX_CREDIT 	= / *(?<process_date>[0-9]{2}\/[0-9]{2}) + (?<source>.+ )(?<amount>[-,0-9]+\.[0-9]{2})/
 		@REX_SAVINGS 	= / +SAVINGS SUMMARY/
 
-		@log = BNLogger.log
+		@log 			= BNLogger.log
     end
 
   	def parse_pdfs(dir, type)
