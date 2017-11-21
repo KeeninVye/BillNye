@@ -4,6 +4,7 @@ log/*
 text/*
 data/*
 db/*
+*.txt
 
 
 # Byte-compiled / optimized / DLL files
