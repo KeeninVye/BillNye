@@ -6,11 +6,11 @@ class Credit
 		@type  	 = _type
 		@uDate 	 = _pDate
 		@source  = _source
-		@amount  = _amount
+		@amount  = _amount.to_f * -1.00
 	end
 
 	def to_string
-		return"#{@pDate},#{@type},#{@uDate},#{@source},#{@amount}\n"
+		return"#{@pDate},#{@type},#{@uDate},#{@source},#{@amount},None\n"
 	end
 
 	attr_reader :pDate

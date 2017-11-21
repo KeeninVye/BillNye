@@ -11,7 +11,7 @@ class Debit
 	end
 
 	def to_string
-		return"#{@pDate},#{@type},#{@uDate},#{@source},#{@amount}\n"
+		return"#{@pDate},#{@type},#{@uDate},#{@source},#{@amount},None\n"
 	end
 	
 	attr_reader :pDate
