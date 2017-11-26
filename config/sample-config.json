@@ -1,6 +1,0 @@
-{
-  "logging": {
-    "file": "/log/billnye.log",
-    "level": "debug"
-  }
-}
