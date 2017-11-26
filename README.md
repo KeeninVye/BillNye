@@ -1,43 +1,30 @@
-# Bill::Nye
+# BillNye💰
 
 A library to facilitate in parsing and getting data from Chase Bank statements.
 
-## Installation
+## Installation💽
+`go get github.com/keeninvye/BillNye`
 
-Add this line to your application's Gemfile:
+## Documentation📜
+Coming Soon.
 
-    gem 'bill-nye'
+## Usage⌨️
+#### Mac Example
 
-And then execute:
+```go
+// Parse Credit Statement
+credit_transactions, err := ParseCreditStatement(`credit_statement.pdf`)
+if err != nil {
+  panic(err)
+}
 
-    $ bundle
+// Parse Debit Statement
+debit_transactions, err := ParseDebitStatement(`debit_statement.pdf`)
+if err != nil {
+  panic(err)
+}
+```
 
-Or install it yourself as:
+## Contributing🍄
 
-    $ gem install BillNye
-
-## Usage
-
-	To parse a single Chase Bank debit card statement:
-	$ b = BillNye.new
-  	$ b.parse_pdf('path/to/bank/statement.pdf', 1)
-
-	To parse multiple Chase Bank debit card statements:
-  	$ b.parse_pdfs('path/to/bank/statements/', 1)
-
-  	The second argument of the parse_pds(s) function determines what type of statement you are going to parse.
-
-	To parse a single Chase Bank credit card statement:
-	$ b = BillNye.new
-  	$ b.parse_pdf('path/to/bank/statement.pdf', 2)
-
-	To parse multiple Chase Bank credit card statements:
-  	$ b.parse_pdfs('path/to/bank/statements/', 2)
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Please sen pull requests! It would be great to have more support for other bank statements, i.e. BoA, BECU, Wells Fargo.  Giving more people the ability to access their raw transaction data will be very beneficial!
