@@ -5,7 +5,9 @@ text/*
 data/*
 db/*
 *.txt
-
+*.pdf
+test.pdf
+debit.pdf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

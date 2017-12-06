@@ -13,6 +13,11 @@ import (
 //Debug enbles more verbose debug output to console
 var Debug bool
 
+type BillNye struct {
+    debit_transactions []*DebitTransaction
+    credit_transactions []*CreditTransaction
+}
+
 type DebitTransaction struct {
     Date    string
     Type    string
@@ -51,9 +56,8 @@ func ParseCreditStatements(path_to_dir string) (){
 }
 
 //Parse a single credit statement
-func ParseCreditStatement(path string) (credit_transactions []*CreditTransaction, err error){
+func (bn BillNye) ParseCreditStatement(path string) {//(credit_transactions []*CreditTransaction, err error){
     f, err := os.Open(path)
-
     REX_CREDIT_MATCH        := "[\t ]*([0-9]{2}/[0-9]{2}) +(.+ ) *([-,0-9]+\\.[0-9]{2})"
     REX_CREDIT, _           := regexp.Compile("[\t ]*([0-9]{2}/[0-9]{2}) +(.+ ) *([-,0-9]+\\.[0-9]{2})")
 
@@ -64,8 +68,8 @@ func ParseCreditStatement(path string) (credit_transactions []*CreditTransaction
     credit_text        := ParsePDF(f)
     parsed_credit_text := strings.Split(credit_text,"\n")
     var count int
+    var pdf_lines int
     for elem, char := range parsed_credit_text {
-        fmt.Println(elem)
         match, _ := regexp.MatchString(REX_CREDIT_MATCH, char)
         if(match == true) {
             var Date string
@@ -83,21 +87,20 @@ func ParseCreditStatement(path string) (credit_transactions []*CreditTransaction
                 }
             }
             ct := NewCreditTransaction(Date, Source, Amount)
-            credit_transactions = append(credit_transactions, ct)
+            bn.credit_transactions = append(bn.credit_transactions, ct)
             fmt.Println(ct)
             count = count + 1
-
+            pdf_lines = elem
         }
     }
     debug("Count: ", count)
-
-    return credit_transactions, err
+    debug("Lines in the PDF: ", pdf_lines)
+    //return credit_transactions, err
 }
 
 //Parse a single credit statement
-func ParseDebitStatement(path string) (debit_transactions []*DebitTransaction, err error){
+func (bn *BillNye) ParseDebitStatement(path string) {//(debit_transactions []*DebitTransaction, err error){
     f, err := os.Open(path)
-
     //list := []*DebitTransaction{}
 
     REX_DEBIT_MATCH := "[ \t]*([0-9]{2}/[0-9]{2})[ \t]*([\\w \\/\\.\\#\\:\\-\\*]+ )([0-9\\-\\,]+\\.[0-9]{2}) +"
@@ -110,9 +113,8 @@ func ParseDebitStatement(path string) (debit_transactions []*DebitTransaction, e
     debit_text        := ParsePDF(f)
     parsed_debit_text := strings.Split(debit_text,"\n")
     var count int
+    var pdf_lines int
     for elem, char := range parsed_debit_text {
-        fmt.Println(elem)
-        fmt.Println(char)
         match, _ := regexp.MatchString(REX_DEBIT_MATCH, char)
         if(match == true) {
             var Date string
@@ -131,13 +133,14 @@ func ParseDebitStatement(path string) (debit_transactions []*DebitTransaction, e
             }
             dt := NewDebitTransaction(Date, Source, Amount)
             debug(dt)
-            debit_transactions = append(debit_transactions, dt)
+            bn.debit_transactions = append(bn.debit_transactions, dt)
             count = count + 1
+            pdf_lines = elem
         }
     }
     debug("Count: ", count)
-
-    return debit_transactions, err
+    debug("Lines in the PDF: ", pdf_lines)
+    //return debit_transactions, err
 }
 
 func ParsePDF(f *os.File) (string){
